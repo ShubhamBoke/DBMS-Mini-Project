@@ -4,7 +4,6 @@ import random
 from tkinter import messagebox
 import tkinter.font as all_font
 import math
-import webbrowser
 
 db=mysql.connector.connect(host="localhost", user="root", passwd="",database="pharmacy")
 c=db.cursor(buffered=True)
@@ -52,7 +51,6 @@ imagepg3=PhotoImage(file="a1c.png")
 imagepg4=PhotoImage(file="a2hosp.png")
 imagepg5=PhotoImage(file="a2cust.png")
 inventory=PhotoImage(file="stock.png")
-ab=PhotoImage(file='aboutus.png')
 rupee1=PhotoImage(file="rupee1.png")
 rupee2=PhotoImage(file="rupee2.png")
 prescimg = PhotoImage(file="prescription.png")
@@ -135,70 +133,8 @@ def cartfunc():
 def cart():
     global presc
     global medlist
-    def prescription():
+    cartfunc()
 
-        def cartfunc1():
-            if ((len(pn.get()) > 8) or (len(pn.get()) < 8) or ((pn.get()) == "")):
-                messagebox.showerror("Error", "Prescription No. must be of 8 units")
-
-            elif ((dn.get() == "") or ((dn.get()).startswith('Dr.') == False)):
-                messagebox.showerror("Error", "Please Enter Doctor Name")
-
-            elif (da.get() == ""):
-                messagebox.showerror("Error", "Please Enter Doctor's Address")
-
-            elif ((len(drn.get()) > 10) or (len(drn.get()) < 10) or ((drn.get()) == "")):
-                messagebox.showerror("Error", "Registration No. must be of 10 units")
-
-            else:
-                pres.withdraw()
-                cartfunc()
-
-        pres = Toplevel()
-        pres.title("Prescription Details")
-        pres.iconbitmap(r'pharmacyicon.ico')
-        pres.geometry("591x801+830+0")
-        a1 = all_font.Font(weight="bold", size=16, family="Tw Cen MT")
-        pres.resizable(width=FALSE, height=FALSE)
-        Label(pres, image=prescimg).place(x=0, y=0)
-        Label(pres,text="Presciption details is required for:-",font=pfont,bg="white").place(x=20,y=450)
-        z=470
-        for i in range (len(medlist)):
-            Label(pres,text=medlist[i],font=pfont,bg="white").place(x=20,y=z)
-            z+=20
-        Button(pres, text="Submit", bg="white", bd=1, font=a1, relief=RIDGE,command=cartfunc1).place(x=245, y=685)
-
-        new = 1
-        url1 = "https://www.wellworks.co.nz"
-
-        def website():
-            webbrowser.open(url1, new=new)
-
-        link1 = Button(pres, text="Click to visit our Website", font=a1, bg="white", fg="black",command=website, relief=FLAT,cursor="hand2")
-        link1.place(x=170, y=750)
-
-        pn = Entry(pres,bd=4,width=35)
-        pn.place(x=275,y=238)
-        dn = Entry(pres,bd=4,width=35)
-        dn.place(x=275,y=288)
-        da = Entry(pres,bd=4,width=35)
-        da.place(x=275,y=338)
-        drn = Entry(pres,bd=4,width=35)
-        drn.place(x=275,y=405)
-
-    if presc == 1:
-        prescription()
-
-    else:
-        cartfunc()
-
-def aboutus():
-    aboutus=Toplevel(t)
-    aboutus.title("About Us")
-    aboutus.iconbitmap(r'pharmacyicon.ico')
-    aboutus.geometry('550x800+950+0')
-    aboutus.resizable(width=FALSE, height=FALSE)
-    Label(aboutus, image=ab).place(relwidth=1, relheight=1)
 
 def customerinfo():
     global type
@@ -734,8 +670,6 @@ def stockinfo():
 
     buttons()
 
-#-------------------------------------------------------------
-
 
 #-------------------------------------------------------------
 #mainpage
@@ -789,12 +723,6 @@ def mp():
     # -------------------------------------------------------------
     #hoverfuctions
 
-    def enteri(e):
-        hover.place(x=648, y=41)
-        hover.configure(text="Info")
-    def leavei(e):
-        hover.configure(text="")
-
     def entere(e):
         hover.place(x=718, y=41)
         hover.configure(text="Exit")
@@ -841,11 +769,6 @@ def mp():
     stock_button.bind("<Leave>", leavest)
     stock_button.place(x=42, y=7)
 
-    info_image = PhotoImage(file='question.png')
-    info_button = Button(t, image=info_image, bg="white", command=aboutus)
-    info_button.bind("<Enter>", enteri)
-    info_button.bind("<Leave>", leavei)
-    info_button.place(x=647, y=7)
 
     exit_image = PhotoImage(file='logout.png')
     exit_button = Button(t, image=exit_image, bg="white", command=logout)
@@ -861,7 +784,12 @@ def mp():
         def add_to_cart(name, price, qunt):
             total = price * qunt
             query = f"INSERT INTO temp_cart (M_name,Price,Quantity,Sub_Total) VALUES ('{name}', {price}, {qunt}, {total});"
+            query1 = "UPDATE inventory SET Available = Available - %d, Sold = Sold + %d " \
+                     "WHERE ID IN (" \
+                     "SELECT Medicine_id FROM medicine " \
+                     "WHERE M_name= '%s')" % (qunt, qunt, name)
             c.execute(query)
+            c.execute(query1)
             db.commit()
             i = Label(t, text="✔ Added To Cart", font=c3, bg="black", fg="white")
             i.place(x=325, y=380)
@@ -1033,7 +961,12 @@ def mp():
         def add_to_cart(name, price, qunt):
             total = price * qunt
             query = f"INSERT INTO temp_cart (M_name,Price,Quantity,Sub_Total) VALUES ('{name}', {price}, {qunt}, {total});"
+            query1 = "UPDATE inventory SET Available = Available - %d, Sold = Sold + %d " \
+                     "WHERE ID IN (" \
+                     "SELECT AM_id FROM ayurvedic_med " \
+                     "WHERE AM_name= '%s')" %(qunt, qunt, name)
             c.execute(query)
+            c.execute(query1)
             db.commit()
             i = Label(t, text="✔ Added To Cart", font=c3, bg="black", fg="white")
             i.place(x=325, y=380)
@@ -1170,7 +1103,12 @@ def mp():
         def add_to_cart(name, price, qunt):
             total = price * qunt
             query = f"INSERT INTO temp_cart (M_name,Price,Quantity,Sub_Total) VALUES ('{name}', {price}, {qunt}, {total});"
+            query1 = "UPDATE inventory SET Available = Available - %d, Sold = Sold + %d " \
+                     "WHERE ID IN (" \
+                     "SELECT C_id FROM care_products " \
+                     "WHERE CP_name= '%s')" % (qunt, qunt, name)
             c.execute(query)
+            c.execute(query1)
             db.commit()
             i = Label(t, text="✔ Added To Cart", font=c3, bg="black", fg="white")
             i.place(x=325, y=380)

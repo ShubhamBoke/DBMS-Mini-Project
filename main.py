@@ -32,7 +32,7 @@ detail2="/0"
 detail3="/0"
 detail4="/0"
 
-t.title("Wellworks Pharmacy 24x7")
+t.title("Pharmacy Management System 24x7")
 t.iconbitmap(r'pharmacyicon.ico')
 t.resizable(width=FALSE, height=FALSE)
 
@@ -695,7 +695,7 @@ def mp():
     # topdesign
 
     t = Toplevel()
-    t.title("Wellworks Pharmacy 24x7")
+    t.title("Pharmacy Management System 24x7")
     t.iconbitmap(r'pharmacyicon.ico')
     t.geometry('755x770+370+10')
     t.resizable(width=FALSE, height=FALSE)
@@ -1417,7 +1417,7 @@ def checksign():
 
 def signup():
     window1 = Toplevel(t)
-    window1.title("Wellworks Pharmacy 24x7 Sign Up")
+    window1.title("Pharmacy Management System 24x7 Sign Up")
     window1.iconbitmap(r'pharmacyicon.ico')
     window1.geometry("1200x600+180+110")
     window1.resizable(width=FALSE, height=FALSE)
@@ -1605,7 +1605,7 @@ def signup():
 
 def login():
     window2=Toplevel(t)
-    window2.title("Wellworks Pharmacy 24x7 Log In")
+    window2.title("Pharmacy Management System 24x7 Log In")
     window2.iconbitmap(r'pharmacyicon.ico')
     window2.geometry("1200x600+180+110")
     window2.resizable(width=FALSE, height=FALSE)
@@ -1751,7 +1751,7 @@ def login():
 def main_welcome():
     t = Toplevel()
     v = IntVar()
-    t.title("Wellworks Pharmacy 24x7")
+    t.title("Pharmacy Management System 24x7")
     t.iconbitmap(r'pharmacyicon.ico')
     t.resizable(width=FALSE, height=FALSE)
     t.geometry("1200x600+180+110")
@@ -1779,7 +1779,7 @@ def main_welcome():
     c2.create_image(0, 0, image=image2, anchor=NW)
     image1 = PhotoImage(file="a1.png")
     c1.create_image(0, 0, image=image1, anchor=NW)
-    l_title = Label(c2, text="Welcome to Wellworks Pharmancy", bg="#FFFFFF", fg="#000000")
+    l_title = Label(c2, text="Pharmacy Management System", bg="#FFFFFF", fg="#000000")
     l_title['font'] = font
     l_title.place(relx=0.5, rely=0.35, anchor=CENTER)
     b_login = Button(c2, text="Log In", bg="white",fg="black",activeforeground="green",activebackground="grey",bd=1, command=checklogin,relief=RAISED)
@@ -1800,7 +1800,7 @@ c2 = Canvas(c1, width=850, height=450,bd=5,relief=RAISED)
 c2.place(relx=0.5,rely=0.5,anchor=CENTER)
 c2.create_image(0,0,image=image2,anchor=NW)
 c1.create_image(0,0,image=image,anchor=NW)
-l_title = Label(c2, text="Welcome to Wellworks Pharmancy", bg="#FFFFFF", fg="#000000")
+l_title = Label(c2, text="Pharmacy Management System", bg="#FFFFFF", fg="#000000")
 l_title['font']=font
 l_title.place(relx=0.5,rely=0.35,anchor=CENTER)
 b_login = Button(c2, text="Log In",bg="white",fg="black",activeforeground="green",activebackground="grey",bd=1, command=checklogin,relief=RAISED)
